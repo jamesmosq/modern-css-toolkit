@@ -10,8 +10,12 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 - `docs/RESEARCH.md` — market check, Baseline data, candidate catalog with dates, verified CSS contexts,
   BEM/methodology analysis and the owner's decisions. Do not redo that research; update it.
 - Status: prototype. 4 templates (`css-container-query`, `css-fluid-type`, `css-layers`, `css-component-scope`),
-  generator + 9 unit tests green. Never run in an IDE. No git remote yet (owner creates
-  `github.com/jamesmosq/modern-css-toolkit`). No signing keys yet (`~/.modern-css-toolkit-signing/` does not exist;
+  generator + 9 unit tests + css-check green. Remote: `github.com/jamesmosq/modern-css-toolkit` (only `develop`
+  pushed; `main` needs the owner's OK).
+- **Verified by the owner in WebStorm 2026.2 (2026-09-25)**, test files in `../modern-css-toolkit-sandbox`:
+  expansion in .css (top level and inside a block), .scss (options list works), .less, Vue `<style>` and
+  `<style lang="scss">`, HTML `<style>` (not in `<body>`); multi-line indentation preserved. `.sass` trap
+  confirmed: the templates appear there and insert braces (invalid in the indented syntax). No signing keys yet (`~/.modern-css-toolkit-signing/` does not exist;
   owner may approve copying the photo-placeholders ones, as done for bootstrap-toolkit).
 
 ## Owner decisions (2026-09-25)
@@ -22,8 +26,9 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 - Methodology: **option A** — variants with their own abbreviation where naming matters (component scaffolds:
   native nesting / BEM full selectors / @scope / BEM `&__` for SCSS); everything else methodology-agnostic.
   Option C (Settings choice + custom Kotlin macro) possible later.
-- `.sass` (indented syntax) receives CSS templates too (SASS language extends CSS) and braces are invalid there:
-  currently **documented only**; a Kotlin custom context excluding SASS is an open decision.
+- `.sass` (indented syntax) receives CSS templates too (SASS language extends CSS) and braces are invalid there
+  (confirmed in WebStorm 2026-09-25): currently **documented only**; a Kotlin custom context excluding SASS is an
+  open decision.
 - Value rule: no generic filler that Emmet / IDE completion already gives.
 
 ## Working rules
@@ -82,8 +87,7 @@ test by installing `build/distributions/*.zip` in the owner's WebStorm 2026.2 (S
    - `selftest.mjs` must catch 11 kinds of mistakes, 5 nesting-detection cases and accept a valid template.
    - Known limits: detection is regex-based on the text around lightningcss' validation (not a full AST walk);
      `context: value` templates are not supported by css-check yet.
-2. Owner test in WebStorm: expansion in .css, .scss, .less, Vue `<style>` and HTML `<style>`; indentation of
-   multi-line templates; the `.sass` trap.
+2. ~~Owner test in WebStorm~~ — done 2026-09-25, all as expected (see Read first).
 3. Catalog (see RESEARCH.md §3), grouped: layout (grid auto-fit, subgrid, container queries, aspect-ratio,
    logical props, dvh), selectors (:has, :is/:where, :nth-child of, :focus-visible), architecture (layers, nesting,
    @scope, component scaffolds per option A), color (oklch, color-mix, light-dark, relative color, color-scheme),
