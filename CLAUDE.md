@@ -9,14 +9,15 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 ## Read first
 - `docs/RESEARCH.md` — market check, Baseline data, candidate catalog with dates, verified CSS contexts,
   BEM/methodology analysis and the owner's decisions. Do not redo that research; update it.
-- Status: 32 templates (catalog of RESEARCH.md §3), all passing css-check; plugin + generator + platform tests
+- Status: 32 templates (catalog of RESEARCH.md §3), all passing css-check and **tested by the owner in WebStorm
+  2026.2 (2026-09-25, "funcionó de perlas")**; plugin + generator + platform tests
   green; verifyPlugin Compatible 252–263 with no internal/deprecated API (2026-09-25). Remote: `github.com/jamesmosq/modern-css-toolkit` (only `develop`
   pushed; `main` needs the owner's OK).
 - **Verified by the owner in WebStorm 2026.2 (2026-09-25)**, test files in `../modern-css-toolkit-sandbox`:
   expansion in .css (top level and inside a block), .scss (options list works), .less, Vue `<style>` and
   `<style lang="scss">`, HTML `<style>` (not in `<body>`); multi-line indentation preserved. `.sass` trap
-  confirmed: the templates appear there and insert braces (invalid in the indented syntax). No signing keys yet (`~/.modern-css-toolkit-signing/` does not exist;
-  owner may approve copying the photo-placeholders ones, as done for bootstrap-toolkit).
+  confirmed: the templates appear there and insert braces (invalid in the indented syntax). Signing keys: `~/.modern-css-toolkit-signing/` (copies of the photo-placeholders/bootstrap-toolkit keys,
+  approved by the owner 2026-09-25); `signPlugin` + `verifyPluginSignature` pass.
 
 ## Owner decisions (2026-09-25)
 - Name "Modern CSS Toolkit", id `com.jamesmosquera.moderncsstoolkit` (**permanent once published — never change**).
