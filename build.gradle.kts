@@ -14,6 +14,8 @@ dependencies {
     intellijPlatform {
         intellijIdea("2025.2.6.2")
         testFramework(TestFrameworkType.Platform)
+        // Only for CssExceptSassContextTypeTest: the plugin itself does not depend on them.
+        testBundledPlugins("com.intellij.css", "org.jetbrains.plugins.sass", "org.jetbrains.plugins.less")
     }
 }
 

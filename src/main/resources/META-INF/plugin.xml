@@ -9,7 +9,7 @@
     <description><![CDATA[
     <p>Live templates for <b>modern CSS</b> that you can use today: every template states its
     <a href="https://web.dev/baseline">Baseline</a> browser-support status. Works in CSS, SCSS, Less and
-    <code>&lt;style&gt;</code> blocks (HTML, Vue). Type an abbreviation such as <code>css-container-query</code>
+    <code>&lt;style&gt;</code> blocks (HTML, Vue); not in the indented Sass syntax, where braces are invalid. Type an abbreviation such as <code>css-container-query</code>
     and press <kbd>Tab</kbd>.</p>
 
     <h3>Templates</h3>
@@ -32,8 +32,17 @@
 
     <depends>com.intellij.modules.platform</depends>
 
+    <resource-bundle>messages.ModernCssToolkitBundle</resource-bundle>
+
     <extensions defaultExtensionNs="com.intellij">
         <!-- https://plugins.jetbrains.com/docs/intellij/providing-live-templates.html -->
         <defaultLiveTemplates file="/liveTemplates/ModernCssToolkit.xml"/>
+        <!-- The IDE's CSS contexts minus the indented Sass syntax, where braces are invalid (see CssExceptSassContextType). -->
+        <liveTemplateContext contextId="MODERN_CSS_RULES"
+                             implementation="com.jamesmosquera.moderncsstoolkit.context.ModernCssRulesContextType"/>
+        <liveTemplateContext contextId="MODERN_CSS_DECLARATIONS"
+                             implementation="com.jamesmosquera.moderncsstoolkit.context.ModernCssDeclarationsContextType"/>
+        <liveTemplateContext contextId="MODERN_CSS_VALUE"
+                             implementation="com.jamesmosquera.moderncsstoolkit.context.ModernCssValueContextType"/>
     </extensions>
 </idea-plugin>

@@ -14,18 +14,19 @@ data class Variable(
 )
 
 /**
- * Where a template may be expanded. Context ids verified in IDEA 2025.2 (css-impl plugin.xml).
- * They also apply in SCSS, Sass and Less (their Language has CSS as base) and in Vue/HTML `<style>`.
+ * Where a template may be expanded. The ids are the plugin's own contexts (registered in plugin.xml), which
+ * delegate to the IDE's CSS contexts `CSS_RULESET_LIST` / `CSS_DECLARATION_BLOCK` / `CSS_PROPERTY_VALUE` but
+ * exclude the indented Sass syntax. They apply in CSS, SCSS, Less and Vue/HTML `<style>`.
  */
 enum class Context(val key: String, val contextId: String) {
     /** Top level of a stylesheet, where rules and at-rules go (`@container`, `@layer`, `.card { }`). */
-    RULES("rules", "CSS_RULESET_LIST"),
+    RULES("rules", "MODERN_CSS_RULES"),
 
     /** Inside a `{ }` block, where declarations go (`font-size: clamp(...)`). */
-    DECLARATIONS("declarations", "CSS_DECLARATION_BLOCK"),
+    DECLARATIONS("declarations", "MODERN_CSS_DECLARATIONS"),
 
     /** After `property:`, where a value goes. */
-    VALUE("value", "CSS_PROPERTY_VALUE"),
+    VALUE("value", "MODERN_CSS_VALUE"),
 }
 
 /**

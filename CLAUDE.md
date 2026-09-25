@@ -26,9 +26,7 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 - Methodology: **option A** — variants with their own abbreviation where naming matters (component scaffolds:
   native nesting / BEM full selectors / @scope / BEM `&__` for SCSS); everything else methodology-agnostic.
   Option C (Settings choice + custom Kotlin macro) possible later.
-- `.sass` (indented syntax) receives CSS templates too (SASS language extends CSS) and braces are invalid there
-  (confirmed in WebStorm 2026-09-25): currently **documented only**; a Kotlin custom context excluding SASS is an
-  open decision.
+- `.sass` (indented syntax): **fixed** (owner's choice, 2026-09-25) with the plugin's own contexts, see Layout.
 - Value rule: no generic filler that Emmet / IDE completion already gives.
 
 ## Working rules
@@ -63,13 +61,25 @@ test by installing `build/distributions/*.zip` in the owner's WebStorm 2026.2 (S
 
 ## Layout
 - `src/templates/<category>/css-*.css` — the single source. Header comment, then the body:
-  `description:`, `context: rules|declarations|value` (→ `CSS_RULESET_LIST` / `CSS_DECLARATION_BLOCK` /
-  `CSS_PROPERTY_VALUE`), `baseline: widely|newly`, `features: <web-features ids>`, `var NAME: default`,
+  `description:`, `context: rules|declarations|value` (→ `MODERN_CSS_RULES` / `MODERN_CSS_DECLARATIONS` /
+  `MODERN_CSS_VALUE`), `baseline: widely|newly`, `features: <web-features ids>`, `var NAME: default`,
   optional `options NAME: a, b` (enum list, must contain the default) and `expr NAME: date("yyyy")`.
 - `buildSrc/.../generator/` — `TemplateSource` (parse + validate), `LiveTemplateXml`, `GenerateLiveTemplates`
   task → `build/generated/liveTemplates/liveTemplates/ModernCssToolkit.xml` (resource root, not in git).
   The description gets " (Baseline: widely|newly available)" appended.
-- `src/test/kotlin/.../LiveTemplatesTest.kt` — prefix, single CSS context, Baseline label, braces, description lists all.
+- `src/main/kotlin/.../context/CssExceptSassContextType.kt` — the plugin's own contexts `MODERN_CSS_RULES`,
+  `MODERN_CSS_DECLARATIONS`, `MODERN_CSS_VALUE` (registered in plugin.xml). Each returns false when the language at
+  the offset has id `SASS`, otherwise delegates to the IDE's `CSS_RULESET_LIST` / `CSS_DECLARATION_BLOCK` /
+  `CSS_PROPERTY_VALUE`, looked up through the public `com.intellij.liveTemplateContext` EP
+  (`LiveTemplateContextBean`). Public API only: `LiveTemplateContextService` was rejected because the whole class is
+  `@ApiStatus.Internal`; the CSS plugin's context classes are `final` (and the value one package-private). No plugin
+  dependency on the CSS plugin. Names in `messages/ModernCssToolkitBundle{,_es}.properties`.
+- `src/test/kotlin/.../LiveTemplatesTest.kt` — prefix, single registered context, Baseline label, braces,
+  description lists all, en/es message keys in sync.
+- `src/test/kotlin/.../context/CssExceptSassContextTypeTest.kt` — platform test (BasePlatformTestCase) with the CSS,
+  Sass and Less plugins as `testBundledPlugins` only: our contexts match the IDE's in .css/.scss/.less/HTML `<style>`,
+  not in `<body>`, and are off in .sass where the IDE's CSS context is on. Contexts must be asked with the
+  abbreviation already typed, at the offset where it starts (an empty line is not a CSS context in tests).
 - `src/main/resources/META-INF/plugin.xml` — description must list every template (test enforces).
 
 ## Next steps (in order)

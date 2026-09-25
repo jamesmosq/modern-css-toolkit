@@ -29,7 +29,8 @@ class LiveTemplatesTest {
         }
     }
 
-    private val cssContexts = setOf("CSS", "CSS_RULESET_LIST", "CSS_DECLARATION_BLOCK", "CSS_PROPERTY_VALUE")
+    /** The plugin's own contexts (CSS minus indented Sass), registered in plugin.xml. */
+    private val cssContexts = setOf("MODERN_CSS_RULES", "MODERN_CSS_DECLARATIONS", "MODERN_CSS_VALUE")
 
     @Test
     fun `templates exist, use the css- prefix and exactly one css context`() {
@@ -49,14 +50,31 @@ class LiveTemplatesTest {
     @Test
     fun `declaration templates contain no rules and rule templates contain a block`() = templates.forEach {
         when (it.contexts.single()) {
-            "CSS_DECLARATION_BLOCK" -> assertTrue("${it.name} must not open a block", '{' !in it.value)
-            "CSS_RULESET_LIST" -> assertTrue("${it.name} must contain a rule or at-rule block", '{' in it.value)
+            "MODERN_CSS_DECLARATIONS" -> assertTrue("${it.name} must not open a block", '{' !in it.value)
+            "MODERN_CSS_RULES" -> assertTrue("${it.name} must contain a rule or at-rule block", '{' in it.value)
         }
     }
 
     @Test
     fun `braces are balanced`() = templates.forEach {
         assertEquals("${it.name} has unbalanced braces", it.value.count { c -> c == '{' }, it.value.count { c -> c == '}' })
+    }
+
+    @Test
+    fun `every context used by a template is registered in plugin xml`() {
+        val pluginXml = javaClass.getResourceAsStream("/META-INF/plugin.xml")!!.use { it.readBytes().decodeToString() }
+        val registered = Regex("""<liveTemplateContext\s+contextId="([^"]+)"""").findAll(pluginXml).map { it.groupValues[1] }.toSet()
+        assertEquals(cssContexts, registered)
+        templates.forEach { assertTrue("${it.name}: ${it.contexts} not registered", it.contexts.single() in registered) }
+    }
+
+    @Test
+    fun `english and spanish messages have the same keys`() {
+        fun keys(resource: String): Set<String> {
+            val stream = LiveTemplatesTest::class.java.getResourceAsStream(resource) ?: error("missing $resource")
+            return java.util.Properties().apply { stream.reader(Charsets.UTF_8).use { load(it) } }.stringPropertyNames()
+        }
+        assertEquals(keys("/messages/ModernCssToolkitBundle.properties"), keys("/messages/ModernCssToolkitBundle_es.properties"))
     }
 
     @Test

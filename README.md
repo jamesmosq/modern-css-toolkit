@@ -11,7 +11,8 @@ Live templates for modern CSS in JetBrains IDEs (2025.2 and later). Every templa
 | `css-layers` | Cascade layer order (ITCSS-like) and one `@layer` block | Widely available |
 | `css-component-scope` | Component styles isolated with `@scope` | Newly available |
 
-Works in `.css`, `.scss`, `.less` and `<style>` blocks. Type the abbreviation and press <kbd>Tab</kbd>.
+Works in `.css`, `.scss`, `.less` and `<style>` blocks, but not in the indented Sass syntax (`.sass`), where braces
+are invalid. Type the abbreviation and press <kbd>Tab</kbd>.
 
 Built on the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template).
 
