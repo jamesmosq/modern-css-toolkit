@@ -26,7 +26,8 @@ val generateLiveTemplates by tasks.registering(GenerateLiveTemplates::class) {
 }
 
 sourceSets.main {
-    resources.srcDir(generateLiveTemplates)
+    // Only the XML folder: the task also writes templateManifest.json, which is not a resource.
+    resources.srcDir(generateLiveTemplates.flatMap { it.outputDir })
 }
 
 // Plugin signing: https://plugins.jetbrains.com/docs/intellij/plugin-signing.html
