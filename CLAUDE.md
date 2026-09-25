@@ -40,6 +40,8 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 - Never name a source directory or package `build` (`.gitignore` ignores every `build` path — it bit bootstrap-toolkit).
 - Windows + `core.autocrlf=true`: byte-exact vendored files go under `src/test/resources/vendor/` (`-text` in
   `.gitattributes`), otherwise hashes/data checks break after a checkout.
+- New repos created on Windows record `gradlew` as non-executable: `git update-index --chmod=+x gradlew`
+  (already done here) or Linux CI fails with "permission denied".
 - JDK: Gradle needs `JAVA_HOME=C:\Users\jmosquerarei\.jdks\openjdk-22.0.1` (not set globally in this shell).
 
 ## Commands
