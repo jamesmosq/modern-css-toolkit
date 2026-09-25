@@ -1,0 +1,14 @@
+/*
+description: Responsive grid without media queries: as many columns as fit, each at least a minimum width
+context: rules
+baseline: widely
+features: grid, min-max-clamp
+var GRID: grid
+var MIN: 16rem
+var GAP: 1rem
+*/
+.$GRID$ {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min($MIN$, 100%), 1fr));
+  gap: $GAP$;
+}

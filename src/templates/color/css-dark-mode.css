@@ -1,0 +1,11 @@
+/*
+description: Dark mode overrides that follow the operating system setting
+context: rules
+baseline: widely
+features: prefers-color-scheme
+*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    $END$
+  }
+}

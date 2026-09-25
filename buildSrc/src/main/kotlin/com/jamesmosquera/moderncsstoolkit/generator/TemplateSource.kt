@@ -52,7 +52,8 @@ enum class Baseline(val key: String, val label: String) {
  * ```
  * followed by the body, e.g. `font-size: clamp($MIN$, 0.9rem + 1vw, 2rem);`. See src/templates for real files.
  *
- * `features` are web-features ids (https://github.com/web-platform-dx/web-features); the declared `baseline`
+ * `features` are web-features ids (https://github.com/web-platform-dx/web-features), or `none` when the template only
+ * uses long-established CSS (e.g. plain BEM selectors); the declared `baseline`
  * is checked against them automatically (see CLAUDE.md). Variables: `var NAME: default`,
  * `options NAME: a, b, c` (completion list, must contain the default), `expr NAME: date("yyyy")`.
  */
@@ -81,7 +82,7 @@ data class TemplateSource(
             var description = ""
             var context: Context? = null
             var baseline: Baseline? = null
-            var features = emptyList<String>()
+            var features: List<String>? = null
             val variables = mutableListOf<Variable>()
             header.groupValues[1].lines().map { it.trim() }.filter { it.isNotEmpty() }.forEach { line ->
                 require(':' in line) { "header line must be 'key: value' (got '$line')" }
@@ -93,7 +94,7 @@ data class TemplateSource(
                         ?: error("context must be one of ${Context.entries.map { it.key }} (got '$value')")
                     key == "baseline" -> baseline = Baseline.entries.firstOrNull { it.key == value }
                         ?: error("baseline must be one of ${Baseline.entries.map { it.key }} (got '$value')")
-                    key == "features" -> features = value.split(',').map { it.trim() }.filter { it.isNotEmpty() }
+                    key == "features" -> features = parseFeatures(value)
                     key.startsWith("var ") -> variables += Variable(key.removePrefix("var ").trim(), value)
                     key.startsWith("options ") -> {
                         val index = indexOfDeclared(variables, key.removePrefix("options ").trim(), "options")
@@ -116,8 +117,8 @@ data class TemplateSource(
             require(description.isNotBlank()) { "header needs a 'description'" }
             requireNotNull(context) { "header needs a 'context' (${Context.entries.map { it.key }})" }
             requireNotNull(baseline) { "header needs a 'baseline' (${Baseline.entries.map { it.key }})" }
-            require(features.isNotEmpty()) { "header needs 'features': the web-features ids the template relies on" }
-            features.forEach { require(FEATURE_ID.matches(it)) { "'$it' is not a web-features id" } }
+            requireNotNull(features) { "header needs 'features': the web-features ids the template relies on, or 'none'" }
+            features!!.forEach { require(FEATURE_ID.matches(it)) { "'$it' is not a web-features id" } }
             require(body.isNotBlank()) { "template body is empty" }
             variables.forEach {
                 require(VARIABLE_NAME.matches(it.name)) { "variable '${it.name}' must be UPPER_SNAKE_CASE" }
@@ -134,7 +135,14 @@ data class TemplateSource(
             (used - declared.toSet()).let { require(it.isEmpty()) { "used but not declared: $it" } }
             (declared.toSet() - used).let { require(it.isEmpty()) { "declared but not used: $it" } }
 
-            return TemplateSource(name, description, context!!, baseline!!, features, variables, body)
+            return TemplateSource(name, description, context!!, baseline!!, features!!, variables, body)
+        }
+
+        private fun parseFeatures(value: String): List<String> {
+            if (value == "none") return emptyList()
+            val ids = value.split(',').map { it.trim() }.filter { it.isNotEmpty() }
+            require(ids.isNotEmpty()) { "'features' is empty: write 'none' if the template needs no modern feature" }
+            return ids
         }
 
         private fun indexOfDeclared(variables: List<Variable>, target: String, key: String): Int =

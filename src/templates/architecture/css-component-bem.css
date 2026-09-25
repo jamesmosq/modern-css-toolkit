@@ -1,0 +1,18 @@
+/*
+description: Component with BEM naming in plain CSS: block, element and modifier as full selectors
+context: rules
+baseline: widely
+features: none
+var BLOCK: card
+var ELEMENT: title
+var MODIFIER: featured
+*/
+.$BLOCK$ {
+  $END$
+}
+
+.$BLOCK$__$ELEMENT$ {
+}
+
+.$BLOCK$--$MODIFIER$ {
+}

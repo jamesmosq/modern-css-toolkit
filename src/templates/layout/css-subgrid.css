@@ -1,0 +1,19 @@
+/*
+description: Subgrid: children align to the parent grid (e.g. cards with aligned titles and buttons)
+context: rules
+baseline: widely
+features: grid, subgrid
+var PARENT: cards
+var CHILD: card
+*/
+.$PARENT$ {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.$CHILD$ {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}

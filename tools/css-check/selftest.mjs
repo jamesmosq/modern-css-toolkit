@@ -27,6 +27,8 @@ const mustFail = {
     t('.a:hovr { color: red; }'), 'warning'],
   'misspelled at-rule': [
     t('@contianer (width > 1px) { .a { color: red; } }'), 'warning'],
+  'property without Baseline data (-webkit-line-clamp)': [
+    t('.a { -webkit-line-clamp: 3; }'), "property '-webkit-line-clamp' has no Baseline data"],
   'broken option value': [
     t('.a { container-type: $TYPE$; }', {
       features: ['container-queries'],
@@ -56,6 +58,26 @@ for (const [name, [template, expected]] of Object.entries(mustFail)) {
   if (!ok) failures++;
   console.log(`${ok ? '✓' : '✗'} catches: ${name}${ok ? '' : `\n    expected "${expected}", got: ${JSON.stringify(problems)}`}`);
 }
+
+// Valid declarations that lightningcss cannot type must be accepted thanks to css-tree.
+const newerSyntax = t(
+  '.a { scroll-snap-type: x mandatory; outline-offset: 2px; font: inherit; grid-template-rows: subgrid; '
+  + 'transition: opacity 0.3s, display 0.3s allow-discrete; }',
+  { baseline: 'newly', features: ['scroll-snap', 'subgrid', 'transition-behavior'] });
+const newer = checkTemplate(newerSyntax).problems.filter((p) => /invalid value|unknown property/.test(p));
+if (newer.length > 0) failures++;
+console.log(`${newer.length === 0 ? '✓' : '✗'} accepts valid syntax lightningcss cannot type${newer.length ? `: ${JSON.stringify(newer)}` : ''}`);
+
+// A key of a feature that is only newly available as a whole keeps its own (widely) status.
+const oldTextWrap = checkTemplate(t('.a { text-wrap: nowrap; }', { features: [] }));
+if (oldTextWrap.problems.length > 0) failures++;
+console.log(`${oldTextWrap.problems.length === 0 ? '✓' : '✗'} text-wrap: nowrap stays widely available${oldTextWrap.problems.length ? `: ${JSON.stringify(oldTextWrap.problems)}` : ''}`);
+
+// Functions inside custom property values are detected (light-dark() is newly available).
+const customProp = checkTemplate(t(':root { --surface: light-dark(white, black); }'));
+const customOk = customProp.problems.some((p) => p.includes("add 'light-dark' to features"));
+if (!customOk) failures++;
+console.log(`${customOk ? '✓' : '✗'} detects functions inside custom property values`);
 
 const valid = t('.card { container-type: inline-size; }\n@container (width >= 400px) { .title { font-size: clamp(1rem, 2cqi, 2rem); } }',
   { features: ['container-queries'] });

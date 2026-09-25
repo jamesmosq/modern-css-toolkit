@@ -14,9 +14,14 @@
 
     <h3>Templates</h3>
     <ul>
-      <li><b>Layout:</b> <code>css-container-query</code></li>
-      <li><b>Typography:</b> <code>css-fluid-type</code></li>
-      <li><b>Architecture:</b> <code>css-layers</code>, <code>css-component-scope</code></li>
+      <li><b>Layout:</b> <code>css-container-named</code>, <code>css-container-query</code>, <code>css-full-height</code>, <code>css-grid-auto</code>, <code>css-logical-spacing</code>, <code>css-media-range</code>, <code>css-scroll-snap</code>, <code>css-subgrid</code></li>
+      <li><b>Selectors:</b> <code>css-focus-visible</code>, <code>css-has</code>, <code>css-nth-of</code>, <code>css-where-reset</code></li>
+      <li><b>Architecture:</b> <code>css-component-bem</code>, <code>css-component-scope</code>, <code>css-component</code>, <code>css-container-style</code>, <code>css-layers</code>, <code>css-property</code>, <code>css-reset</code></li>
+      <li><b>Color:</b> <code>css-color-tokens</code>, <code>css-dark-mode</code>, <code>css-light-dark</code>, <code>css-relative-color</code></li>
+      <li><b>Typography:</b> <code>css-fluid-type</code>, <code>css-text-balance</code></li>
+      <li><b>Motion:</b> <code>css-dialog-animation</code>, <code>css-entry-animation</code>, <code>css-reduced-motion</code>, <code>css-smooth-scroll</code>, <code>css-view-transition</code></li>
+      <li><b>Accessibility:</b> <code>css-visually-hidden</code></li>
+      <li><b>Forms:</b> <code>css-field-sizing</code></li>
     </ul>
 
     <h3>Usage</h3>

@@ -45,6 +45,18 @@ Not Baseline (false) — excluded
 - `anchor-positioning`, `scroll-driven-animations`, `text-wrap-pretty`, `interpolate-size`, `if`,
   `cross-document-view-transitions`, `custom-media-queries`, `css-modules` (import attributes)
 - Surprises per the data: `accent-color` and `overscroll-behavior` are also NOT Baseline.
+- `line-clamp` is NOT Baseline and the prefixed `-webkit-line-clamp` / `-webkit-box-orient` have no web-features
+  data at all → the "truncate after N lines" template was dropped (2026-09-25).
+
+## 6. Validators (evaluated 2026-09-25)
+- lightningcss 1.33.0: parses all modern syntax (nesting, @scope, @container, @layer, :has, oklch); warns on
+  misspelled selectors/at-rules; catches wrong math functions. BUT it only types the properties it models: others
+  (scroll-snap-type, scroll-behavior, outline-offset, text-wrap, field-sizing...) come back as `custom`, and newer
+  values (subgrid, allow-discrete) or CSS-wide keywords (inherit) as `unparsed`.
+- css-tree 3.2.1 lexer (MDN syntax data): validates all of those correctly and catches unknown properties and
+  wrong values, but misses `clamp(1rem 2rem)` and cannot parse native nesting.
+- Used together (tools/css-check): lightningcss first; declarations it cannot type go to css-tree; a value with a
+  math function in a property lightningcss knows but cannot type is invalid.
 
 ## 4. Where CSS live templates apply (verified in IDEA 2025.2 bytecode, css-impl.jar)
 - Context ids: `CSS` (generic), `CSS_RULESET_LIST` (top level), `CSS_DECLARATION_BLOCK` (inside `{}`),

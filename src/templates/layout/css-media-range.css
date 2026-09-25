@@ -1,0 +1,10 @@
+/*
+description: Media query with the range syntax (width >= ...) instead of min-width
+context: rules
+baseline: widely
+features: media-query-range-syntax
+var MIN_WIDTH: 48rem
+*/
+@media (width >= $MIN_WIDTH$) {
+  $END$
+}

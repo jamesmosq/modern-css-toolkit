@@ -1,0 +1,20 @@
+/*
+description: Horizontal scroll-snap track (carousel without JavaScript)
+context: rules
+baseline: widely
+features: scroll-snap, grid
+var TRACK: track
+var ITEM_WIDTH: 80%
+*/
+.$TRACK$ {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: $ITEM_WIDTH$;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.$TRACK$ > * {
+  scroll-snap-align: start;
+}

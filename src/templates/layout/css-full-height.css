@@ -1,0 +1,7 @@
+/*
+description: Full viewport height that ignores mobile browser toolbars (dynamic viewport units)
+context: declarations
+baseline: widely
+features: viewport-unit-variants, logical-properties
+*/
+min-block-size: 100dvh;

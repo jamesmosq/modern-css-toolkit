@@ -1,0 +1,10 @@
+/*
+description: Padding with logical properties (block = top/bottom, inline = start/end; works in RTL)
+context: declarations
+baseline: widely
+features: logical-properties
+var BLOCK: 1rem
+var INLINE: 1.5rem
+*/
+padding-block: $BLOCK$;
+padding-inline: $INLINE$;

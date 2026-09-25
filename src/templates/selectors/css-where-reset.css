@@ -1,0 +1,10 @@
+/*
+description: Zero-specificity defaults with :where(), easy to override anywhere
+context: rules
+baseline: widely
+features: where
+*/
+:where(ul, ol)[role="list"] {
+  list-style: none;
+  padding: 0;
+}

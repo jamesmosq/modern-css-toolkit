@@ -1,0 +1,11 @@
+/*
+description: Light and dark colors in one declaration with light-dark() and color-scheme
+context: rules
+baseline: newly
+features: light-dark, color-scheme
+*/
+:root {
+  color-scheme: light dark;
+  --surface: light-dark(#ffffff, #121212);
+  --text: light-dark(#1a1a1a, #ececec);
+}

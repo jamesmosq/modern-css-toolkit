@@ -1,0 +1,11 @@
+/*
+description: Container style query: style children when a container custom property has a value
+context: rules
+baseline: newly
+features: container-style-queries
+var PROPERTY: theme
+var VALUE: dark
+*/
+@container style(--$PROPERTY$: $VALUE$) {
+  $END$
+}

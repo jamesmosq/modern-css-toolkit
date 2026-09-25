@@ -1,0 +1,10 @@
+/*
+description: Zebra rows counting only matching elements with :nth-child(... of selector)
+context: rules
+baseline: widely
+features: nth-child-of
+var ITEM: row
+*/
+:nth-child(odd of .$ITEM$) {
+  $END$
+}

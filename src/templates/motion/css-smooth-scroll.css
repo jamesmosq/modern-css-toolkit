@@ -1,0 +1,11 @@
+/*
+description: Smooth scrolling only for users who have not asked to reduce motion
+context: rules
+baseline: widely
+features: prefers-reduced-motion
+*/
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

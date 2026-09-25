@@ -1,0 +1,12 @@
+/*
+description: Color tokens in OKLCH with hover and subtle variants mixed by color-mix()
+context: rules
+baseline: widely
+features: oklab, color-mix
+var HUE: 255
+*/
+:root {
+  --brand: oklch(62% 0.19 $HUE$);
+  --brand-hover: color-mix(in oklch, var(--brand), black 15%);
+  --brand-subtle: color-mix(in oklch, var(--brand), white 85%);
+}

@@ -1,0 +1,15 @@
+/*
+description: Entry animation with @starting-style: fade and slide in when the element appears
+context: rules
+baseline: newly
+features: starting-style, individual-transforms, nesting
+var SELECTOR: .toast
+*/
+$SELECTOR$ {
+  transition: opacity 0.3s, translate 0.3s;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}

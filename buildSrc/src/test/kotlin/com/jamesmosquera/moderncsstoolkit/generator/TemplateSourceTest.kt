@@ -44,6 +44,14 @@ class TemplateSourceTest {
     }
 
     @Test
+    fun `features none means no modern feature, an empty list is rejected`() {
+        assertEquals(emptyList<String>(), TemplateSource.parse("css-fluid-type", valid.replace("features: min-max-clamp", "features: none")).features)
+        assertThrows(IllegalArgumentException::class.java) {
+            TemplateSource.parse("css-fluid-type", valid.replace("features: min-max-clamp", "features:"))
+        }
+    }
+
+    @Test
     fun `options and expr attach to declared variables`() {
         val t = TemplateSource.parse("css-fluid-type", valid.replace("var MAX: 2rem\r\n", "var MAX: 2rem\r\noptions MAX: 2rem, 3rem\r\n"))
         assertEquals(listOf("2rem", "3rem"), t.variables.last().options)

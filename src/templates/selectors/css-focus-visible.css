@@ -1,0 +1,12 @@
+/*
+description: Keyboard-only focus ring with :focus-visible
+context: rules
+baseline: widely
+features: focus-visible
+var SELECTOR: button
+var COLOR: currentColor
+*/
+$SELECTOR$:focus-visible {
+  outline: 2px solid $COLOR$;
+  outline-offset: 2px;
+}

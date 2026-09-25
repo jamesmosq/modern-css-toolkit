@@ -1,0 +1,7 @@
+/*
+description: Textarea and inputs that grow with their content (field-sizing)
+context: declarations
+baseline: newly
+features: field-sizing
+*/
+field-sizing: content;

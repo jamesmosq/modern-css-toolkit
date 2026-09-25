@@ -1,0 +1,15 @@
+/*
+description: Same-document view transition: name an element and tune its animation
+context: rules
+baseline: newly
+features: view-transitions
+var NAME: hero
+*/
+.$NAME$ {
+  view-transition-name: $NAME$;
+}
+
+::view-transition-old($NAME$),
+::view-transition-new($NAME$) {
+  animation-duration: 0.3s;
+}

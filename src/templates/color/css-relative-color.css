@@ -1,0 +1,10 @@
+/*
+description: Relative color: derive a lighter shade from another color with oklch(from ...)
+context: rules
+baseline: newly
+features: relative-color, oklab
+var NAME: brand
+*/
+:root {
+  --$NAME$-light: oklch(from var(--$NAME$) calc(l + 0.2) c h);
+}

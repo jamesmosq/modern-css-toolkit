@@ -1,0 +1,19 @@
+/*
+description: Component with native CSS nesting (child, state and modifier rules inside the block)
+context: rules
+baseline: widely
+features: nesting
+var BLOCK: card
+*/
+.$BLOCK$ {
+  $END$
+
+  & .title {
+  }
+
+  &:hover {
+  }
+
+  &.is-active {
+  }
+}

@@ -1,0 +1,15 @@
+/*
+description: Named size container and a query that targets it by name
+context: rules
+baseline: widely
+features: container-queries
+var NAME: sidebar
+var MIN_WIDTH: 30rem
+*/
+.$NAME$ {
+  container: $NAME$ / inline-size;
+}
+
+@container $NAME$ (width >= $MIN_WIDTH$) {
+  $END$
+}

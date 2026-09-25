@@ -1,0 +1,11 @@
+/*
+description: Style a parent depending on its children with :has()
+context: rules
+baseline: widely
+features: has
+var PARENT: card
+var CHILD: > img
+*/
+.$PARENT$:has($CHILD$) {
+  $END$
+}

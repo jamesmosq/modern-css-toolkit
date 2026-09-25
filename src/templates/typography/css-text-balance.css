@@ -1,0 +1,7 @@
+/*
+description: Balanced line lengths for headings with text-wrap: balance
+context: declarations
+baseline: newly
+features: text-wrap-balance
+*/
+text-wrap: balance;

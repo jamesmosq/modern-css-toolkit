@@ -1,0 +1,12 @@
+/*
+description: Typed custom property with @property (animatable, with a default value)
+context: rules
+baseline: newly
+features: registered-custom-properties
+var NAME: accent
+*/
+@property --$NAME$ {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}

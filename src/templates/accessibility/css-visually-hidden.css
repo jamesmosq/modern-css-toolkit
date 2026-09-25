@@ -1,0 +1,15 @@
+/*
+description: Visually hidden but still read by screen readers
+context: rules
+baseline: widely
+features: none
+var CLASS: visually-hidden
+*/
+.$CLASS$ {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

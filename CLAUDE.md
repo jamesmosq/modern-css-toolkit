@@ -9,8 +9,8 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 ## Read first
 - `docs/RESEARCH.md` — market check, Baseline data, candidate catalog with dates, verified CSS contexts,
   BEM/methodology analysis and the owner's decisions. Do not redo that research; update it.
-- Status: prototype. 4 templates (`css-container-query`, `css-fluid-type`, `css-layers`, `css-component-scope`),
-  generator + 9 unit tests + css-check green. Remote: `github.com/jamesmosq/modern-css-toolkit` (only `develop`
+- Status: 32 templates (catalog of RESEARCH.md §3), all passing css-check; plugin + generator + platform tests
+  green; verifyPlugin Compatible 252–263 with no internal/deprecated API (2026-09-25). Remote: `github.com/jamesmosq/modern-css-toolkit` (only `develop`
   pushed; `main` needs the owner's OK).
 - **Verified by the owner in WebStorm 2026.2 (2026-09-25)**, test files in `../modern-css-toolkit-sandbox`:
   expansion in .css (top level and inside a block), .scss (options list works), .less, Vue `<style>` and
@@ -95,10 +95,15 @@ test by installing `build/distributions/*.zip` in the owner's WebStorm 2026.2 (S
    - Rules: declared `baseline` must equal the computed worst status; any non-Baseline key fails; any newly
      available key must have its feature in `features:`; every declared id must exist and be Baseline.
    - `selftest.mjs` must catch 11 kinds of mistakes, 5 nesting-detection cases and accept a valid template.
-   - Known limits: detection is regex-based on the text around lightningcss' validation (not a full AST walk);
-     `context: value` templates are not supported by css-check yet.
+   - Validation is two-layered: lightningcss, then css-tree's lexer for declarations lightningcss cannot type
+     (see RESEARCH.md §6). Every property must have Baseline data (`css.properties.X` in web-features), otherwise
+     the template fails; descriptors inside @property/@font-face/@counter-style/@page are checked as
+     `css.at-rules.<rule>.<descriptor>`. Key status: the key's own status, but `false` if its whole feature is not
+     Baseline (a "low" feature does not downgrade its "high" keys). Custom property values are scanned too.
+   - Known limits: detection is regex-based on the text (not a full AST walk); `context: value` templates are not
+     supported by css-check yet; SCSS-only templates (BEM with `&__`) would need an SCSS context and parser.
 2. ~~Owner test in WebStorm~~ — done 2026-09-25, all as expected (see Read first).
-3. Catalog (see RESEARCH.md §3), grouped: layout (grid auto-fit, subgrid, container queries, aspect-ratio,
+3. ~~Catalog~~ — done 2026-09-25 (32 templates). Was, grouped: layout (grid auto-fit, subgrid, container queries, aspect-ratio,
    logical props, dvh), selectors (:has, :is/:where, :nth-child of, :focus-visible), architecture (layers, nesting,
    @scope, component scaffolds per option A), color (oklch, color-mix, light-dark, relative color, color-scheme),
    typography (clamp, text-wrap balance), motion/a11y (prefers-reduced-motion, prefers-color-scheme, @starting-style,

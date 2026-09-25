@@ -1,0 +1,27 @@
+/*
+description: Animate a dialog in and out (display transition with allow-discrete and @starting-style)
+context: rules
+baseline: newly
+features: dialog, starting-style, transition-behavior, individual-transforms
+*/
+dialog {
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity 0.3s, translate 0.3s, display 0.3s allow-discrete;
+}
+
+dialog[open] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
