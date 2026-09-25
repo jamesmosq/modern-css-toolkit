@@ -14,3 +14,7 @@ updates:
     schedule:
       interval: "daily"
 
+  - package-ecosystem: "npm"
+    directory: "/tools/css-check"
+    schedule:
+      interval: "weekly"

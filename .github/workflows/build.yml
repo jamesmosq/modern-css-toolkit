@@ -102,6 +102,20 @@ jobs:
       - name: Run Generator Tests
         run: ./gradlew -p buildSrc test
 
+      # Parse every generated CSS template and verify its Baseline status (needs the manifest written by `check`)
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: tools/css-check/package-lock.json
+
+      - name: Run CSS Check
+        run: |
+          npm ci --prefix tools/css-check
+          npm --prefix tools/css-check run selftest
+          npm --prefix tools/css-check run check
+
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
         if: ${{ failure() }}

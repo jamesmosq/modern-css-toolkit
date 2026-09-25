@@ -3,16 +3,19 @@ package com.jamesmosquera.moderncsstoolkit.generator
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
 /**
  * Generates the live template XML from the single source in [sourceDir] (src/templates/.../css-*.css).
- * Output goes to [outputDir]/liveTemplates, which is registered as a resource root.
+ * Output goes to [outputDir]/liveTemplates, which is registered as a resource root. [manifestFile] (outside the
+ * resources, not shipped) describes every template as JSON for tools/css-check.
  */
 @CacheableTask
 abstract class GenerateLiveTemplates : DefaultTask() {
@@ -23,6 +26,9 @@ abstract class GenerateLiveTemplates : DefaultTask() {
 
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
+
+    @get:OutputFile
+    abstract val manifestFile: RegularFileProperty
 
     @TaskAction
     fun generate() {
@@ -51,5 +57,6 @@ abstract class GenerateLiveTemplates : DefaultTask() {
         out.deleteRecursively()
         out.mkdirs()
         out.resolve(LiveTemplateXml.FILE_NAME).writeText(LiveTemplateXml.render(templates))
+        manifestFile.get().asFile.writeText(Manifest.render(templates))
     }
 }

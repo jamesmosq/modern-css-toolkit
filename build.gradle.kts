@@ -22,6 +22,7 @@ dependencies {
 val generateLiveTemplates by tasks.registering(GenerateLiveTemplates::class) {
     sourceDir = layout.projectDirectory.dir("src/templates")
     outputDir = layout.buildDirectory.dir("generated/liveTemplates")
+    manifestFile = layout.buildDirectory.file("generated/templateManifest.json")
 }
 
 sourceSets.main {

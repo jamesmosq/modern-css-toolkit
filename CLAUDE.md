@@ -46,8 +46,9 @@ This project was created from bootstrap-toolkit on 2026-09-25; its generator/tes
 
 ## Commands
 ```bash
-./gradlew build                 # compile + plugin tests (generates the XML first)
+./gradlew build                 # compile + plugin tests (generates the XML and the manifest first)
 ./gradlew -p buildSrc test      # generator unit tests (NOT run by `check`; CI runs both)
+npm ci --prefix tools/css-check && npm --prefix tools/css-check run selftest && npm --prefix tools/css-check run check
 ./gradlew verifyPlugin          # Plugin Verifier (must pass before any release; ~10 min, run in background)
 ./gradlew buildPlugin           # build/distributions/*.zip
 ./gradlew signPlugin            # then, in a separate invocation: ./gradlew verifyPluginSignature
@@ -67,15 +68,20 @@ test by installing `build/distributions/*.zip` in the owner's WebStorm 2026.2 (S
 - `src/main/resources/META-INF/plugin.xml` — description must list every template (test enforces).
 
 ## Next steps (in order)
-1. **Verification pipeline** (`tools/css-check`, Node, like bootstrap-toolkit's `tools/tsx-check`):
-   a) parse every template (defaults filled in, every `options` value) with `css-tree`; first prove css-tree
-      accepts `@scope`, `@container`, `@layer` and nesting — if not, evaluate `lightningcss` instead;
-   b) verify every `features:` id exists in `web-features` and that the declared `baseline` equals the
-      *worst* status among them;
-   c) stronger: map the parsed CSS (properties, at-rules, selectors, functions) to BCD keys and compute the status
-      with `compute-baseline`, so an undeclared newer feature fails the build.
-   Pin package versions, commit package-lock, add a CI step and re-add the npm entry to `.github/dependabot.yml`
-   (removed because the folder does not exist yet).
+1. ~~Verification pipeline~~ — done 2026-09-25 (`tools/css-check`, in CI). Facts learned:
+   - `css-tree` 3.2.1 was rejected: it fails on native nesting (`&:hover`) and misses `clamp(1rem 2rem)`.
+   - `lightningcss` 1.33.0 parses all modern syntax and flags misspelled selectors/at-rules as warnings. Unknown
+     properties come back as `property: 'custom'` (name without `--`) and invalid values as `'unparsed'` (legit only
+     with `var()`); check.mjs turns both into errors.
+   - `web-features` has per-key statuses (`status.by_compat_key`, 15,487 BCD keys), so `compute-baseline`/BCD are
+     not needed. check.mjs maps the CSS to keys (at-rules + prelude features, pseudo-classes, nesting via block
+     structure, properties + keyword values, functions, length units) and uses the WORSE of the key status and its
+     feature's overall status (e.g. `anchor-name` key is "low" but anchor positioning is not Baseline).
+   - Rules: declared `baseline` must equal the computed worst status; any non-Baseline key fails; any newly
+     available key must have its feature in `features:`; every declared id must exist and be Baseline.
+   - `selftest.mjs` must catch 11 kinds of mistakes, 5 nesting-detection cases and accept a valid template.
+   - Known limits: detection is regex-based on the text around lightningcss' validation (not a full AST walk);
+     `context: value` templates are not supported by css-check yet.
 2. Owner test in WebStorm: expansion in .css, .scss, .less, Vue `<style>` and HTML `<style>`; indentation of
    multi-line templates; the `.sass` trap.
 3. Catalog (see RESEARCH.md §3), grouped: layout (grid auto-fit, subgrid, container queries, aspect-ratio,

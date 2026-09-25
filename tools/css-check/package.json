@@ -1,0 +1,14 @@
+{
+  "name": "modern-css-toolkit-css-check",
+  "private": true,
+  "description": "Parses every generated CSS live template and verifies its Baseline status against web-features.",
+  "type": "module",
+  "scripts": {
+    "check": "node check.mjs",
+    "selftest": "node selftest.mjs"
+  },
+  "devDependencies": {
+    "lightningcss": "1.33.0",
+    "web-features": "3.40.0"
+  }
+}
