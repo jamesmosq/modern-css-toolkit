@@ -1,0 +1,15 @@
+/*
+description: Container query: make an element a size container and style its content by the container width
+context: rules
+baseline: widely
+features: container-queries
+var CONTAINER: card
+var MIN_WIDTH: 400px
+*/
+.$CONTAINER$ {
+  container-type: inline-size;
+}
+
+@container (width >= $MIN_WIDTH$) {
+  $END$
+}

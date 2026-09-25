@@ -1,0 +1,10 @@
+/*
+description: Fluid font size that grows with the viewport between a minimum and a maximum
+context: declarations
+baseline: widely
+features: min-max-clamp
+var MIN: 1rem
+var PREFERRED: 0.875rem + 1vw
+var MAX: 2rem
+*/
+font-size: clamp($MIN$, $PREFERRED$, $MAX$);

@@ -1,0 +1,39 @@
+<!-- https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- The id can never change once published. -->
+    <id>com.jamesmosquera.moderncsstoolkit</id>
+    <name>Modern CSS Toolkit</name>
+    <vendor email="jamesmosqr@gmail.com" url="https://www.jamesmosquera.com">James Mosquera</vendor>
+
+    <!-- LiveTemplatesTest checks that every template abbreviation is listed here. -->
+    <description><![CDATA[
+    <p>Live templates for <b>modern CSS</b> that you can use today: every template states its
+    <a href="https://web.dev/baseline">Baseline</a> browser-support status. Works in CSS, SCSS, Less and
+    <code>&lt;style&gt;</code> blocks (HTML, Vue). Type an abbreviation such as <code>css-container-query</code>
+    and press <kbd>Tab</kbd>.</p>
+
+    <h3>Templates</h3>
+    <ul>
+      <li><b>Layout:</b> <code>css-container-query</code></li>
+      <li><b>Typography:</b> <code>css-fluid-type</code></li>
+      <li><b>Architecture:</b> <code>css-layers</code>, <code>css-component-scope</code></li>
+    </ul>
+
+    <h3>Usage</h3>
+    <p>Type the abbreviation and press <kbd>Tab</kbd>; press <kbd>Tab</kbd> again to move between the editable
+    fields. <kbd>Ctrl+J</kbd> / <kbd>⌘J</kbd> lists all templates. Customize them under
+    <i>Settings | Editor | Live Templates | Modern CSS Toolkit</i>.</p>
+
+    <h3>Privacy</h3>
+    <p>The plugin collects no data and makes no network requests.</p>
+
+    <p>Source code: <a href="https://github.com/jamesmosq/modern-css-toolkit">github.com/jamesmosq/modern-css-toolkit</a>.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- https://plugins.jetbrains.com/docs/intellij/providing-live-templates.html -->
+        <defaultLiveTemplates file="/liveTemplates/ModernCssToolkit.xml"/>
+    </extensions>
+</idea-plugin>

@@ -1,0 +1,2 @@
+# Byte-exact vendored files (e.g. official data used by tests): never convert line endings.
+src/test/resources/vendor/** -text

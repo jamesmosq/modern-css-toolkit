@@ -1,0 +1,13 @@
+/*
+description: Cascade layers: declare the layer order (ITCSS-like) and open one layer
+context: rules
+baseline: widely
+features: cascade-layers
+var LAYER: components
+options LAYER: reset, base, layout, components, utilities
+*/
+@layer reset, base, layout, components, utilities;
+
+@layer $LAYER$ {
+  $END$
+}

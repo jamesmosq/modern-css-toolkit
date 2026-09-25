@@ -1,0 +1,15 @@
+/*
+description: Component styles isolated with @scope (native alternative to BEM naming)
+context: rules
+baseline: newly
+features: scope
+var BLOCK: card
+*/
+@scope (.$BLOCK$) {
+  :scope {
+    $END$
+  }
+
+  .title {
+  }
+}
