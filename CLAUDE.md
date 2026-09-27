@@ -2,9 +2,16 @@
 
 JetBrains IDE plugin (Kotlin, live templates only for now) with **modern CSS** templates, each labelled with
 its **Baseline** browser-support status. Owner: James Mosquera (jamesmosq).
-Sister projects with the same build setup: `../bootstrap-toolkit` (Bootstrap 5.3 templates, submitted to the
-Marketplace 2026-09-25) and `../photo-placeholders/photo-placeholders` (picsum.photos, Marketplace id 34516).
+Sister projects with the same build setup: `../bootstrap-toolkit` (Bootstrap 5.3 templates, Marketplace id 34519)
+and `../photo-placeholders/photo-placeholders` (picsum.photos, Marketplace id 34516).
 This project was created from bootstrap-toolkit on 2026-09-25; its generator/test design is the model.
+
+## Published (2026-09-27)
+0.1.0 is public on the JetBrains Marketplace. Plugins by the same owner: Photo Placeholders (id 34516),
+Bootstrap Toolkit (id 34519, https://plugins.jetbrains.com/plugin/34519-bootstrap-toolkit), Modern CSS Toolkit
+(id 34527, https://plugins.jetbrains.com/plugin/34527-modern-css-toolkit). The owner uploads releases himself.
+To check Marketplace status use `/api/plugins/<id>/updates?size=1` (`listed`), NOT the `approve` field of
+`/api/plugins/<id>` (it said false for a public plugin). Main audience: the owner's students, who use WebStorm.
 
 ## Read first
 - `docs/RESEARCH.md` — market check, Baseline data, candidate catalog with dates, verified CSS contexts,
