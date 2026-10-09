@@ -10,6 +10,6 @@
   "devDependencies": {
     "css-tree": "3.2.1",
     "lightningcss": "1.33.0",
-    "web-features": "3.40.0"
+    "web-features": "3.40.1"
   }
 }
